@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package rusprofileapi;
+
+option go_package = "/proto_buf;grpc_from0";
+
+import "google/api/annotations.proto";
+
+// выходные данные о компании
+message Company {
+    string Name = 1;
+    string INN = 2;
+    string CEOName = 3;
+    string OGRN = 4;
+}
+
+message GetCompanyByINNRequest {
+    string INN = 1;
+}
+
+message GetCompanyByINNResponse {
+    Company Company = 1;
+}
+
+service RusProfileService{
+    // получает информацию о компании
+    rpc GetCompanyByINN(GetCompanyByINNRequest) returns (GetCompanyByINNResponse){
+        option (google.api.http) = {
+            get: "/v1/GetCompanyByINN/{inn}"
+        };
+    }
+}
